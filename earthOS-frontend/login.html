@@ -3,20 +3,25 @@
 
    <head>
     <title>EarthOS login</title>
+    <link rel="stylesheet" href="login.css">
    </head> 
 
    <body>
-    <h1> welcome to EarthOS</h1>
+
+    <h1> create admin account </h1>
+   
+    <form id="login">
+       <label for="username"> username:</label>
+       <input type="text" id="username" name="username" required>
+
+       <label for="password"> password:</label>
+       <input type="password" id="password" name="password" required>
+
+      <button type="submit">login</button>
+
+    </form>
+
+    <p class="footer"> welcome to EarthOS</p>
+
    </body>
-
-   <form id="login">
-    <label for="username"> username:</label>
-    <input tipe="text" id="username" name="username" required><br><br>
-
-    <label for="password"> password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-
-    <button type="submit">login</button>
-
-   </form>
 </html>

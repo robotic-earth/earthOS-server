@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'earthOS';
+    src: url('Branding/Noto_Sans/NotoSans.ttf') format('truetype');
+}
+
+body{
+    font-family: earthOS;
+    background-color: #272727;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    background-color:   #00d8cd45;
+    padding: 30px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label{
+    background-color: #25fff4a2;
+    padding: 9px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+}
+
+input{
+    background-color:   #25fff4a2;
+    padding: 12px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10 #272727;
+    border: none;
+}
+
+button{
+    background-color:   #00d8cd45;
+    padding: 9px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10 #272727;
+    width: 300px;
+}

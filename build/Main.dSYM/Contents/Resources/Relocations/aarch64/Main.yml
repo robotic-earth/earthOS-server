@@ -1,5 +1,0 @@
----
-triple:          'arm64-apple-darwin'
-binary-path:     '/Users/tristanmv/Desktop/code/EarthOS sever/build/Main'
-relocations:     []
-...
