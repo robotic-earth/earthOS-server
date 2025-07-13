@@ -14,7 +14,7 @@ body{
 }
 
 form{
-    background-color:   #00d8cd45;
+    background-color:   #404040;
     padding: 30px;
     border-radius: 30px;
     backdrop-filter: blur(10px);
@@ -25,14 +25,14 @@ form{
 }
 
 label{
-    background-color: #25fff4a2;
+    background-color: #028982;
     padding: 9px;
     border-radius: 30px;
     backdrop-filter: blur(10px);
 }
 
 input{
-    background-color:   #25fff4a2;
+    background-color:   #00d8ce;
     padding: 12px;
     border-radius: 30px;
     backdrop-filter: blur(10px);
@@ -41,10 +41,11 @@ input{
 }
 
 button{
-    background-color:   #00d8cd45;
+    background-color:   #028982;
     padding: 9px;
     border-radius: 30px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10 #272727;
     width: 300px;
+    border: none;
 }

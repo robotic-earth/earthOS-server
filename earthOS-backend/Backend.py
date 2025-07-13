@@ -9,3 +9,5 @@ class EarthOSHandler(BaseHTTPRequestHandler):
 server = HTTPServer(('0.0.0.0',8000),EarthOSHandler)
 print("backend is running")
 server.serve_forever()
+
+
