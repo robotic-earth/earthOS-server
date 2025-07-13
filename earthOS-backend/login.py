@@ -22,3 +22,6 @@ def save_user(username, hashed_password):
             users = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         users = {}
+    users[username] = hashed_password.hex()
+    with open("users.json", "w") as f:
+        json.dump(users, f)
