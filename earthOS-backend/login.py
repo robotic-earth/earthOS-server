@@ -1,5 +1,6 @@
 import hashlib
 import os 
+import json
 
 def hash_password(password):
     salt = os.urandom(16)
@@ -13,3 +14,11 @@ def verify_password(stored, input_password):
     stored_hash = stored[16:]
     input_hash = hashlib.pbkdf2_hmac('sha256', input_password.encode(), salt, 1000)
     return stored_hash == input_hash
+
+def save_user(username, hashed_password):
+    # Load existing users
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        users = {}
