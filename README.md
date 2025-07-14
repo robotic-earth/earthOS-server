@@ -1,1 +1,1 @@
-Welcome to the EarthOS
+Welcome to the EarthOS project 
