@@ -1,0 +1,62 @@
+@font-face {
+    font-family: 'OSfont1';
+    src: url('../Branding/font/Unitblock-JpJma.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OSfont2';
+    src: url('../Branding/font/NotoSans-ReRl.ttf') format('truetype');
+}
+
+body{
+    font-family: OSfont2;
+    background-color: #272727;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: #25fff5;
+    font-family: OSfont1;
+}
+
+form{
+    background-color:   #44615f;
+    padding: 30px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 2px solid #00d8ce45;
+}
+
+
+input{
+    background-color:   #272727;
+    padding: 12px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    border: 2px solid #00d8ce45;
+}
+
+::placeholder{
+    color: #25fff5;
+    font-family: OSfont2;
+}
+
+button{
+    background-color:   #272727;
+    padding: 9px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    width: 300px;
+    border: none;
+    color: #25fff5;
+    border: 2px solid #25fff5;
+    font-family: OSfont2;
+}
