@@ -2,6 +2,7 @@ import hashlib
 import os 
 import json
 
+
 def hash_password(password):
     #take the input of the password and encrypt
     salt = os.urandom(16)
@@ -38,7 +39,8 @@ def admin_exists():
     except (FileNotFoundError, json.JSONDecodeError):
         return False
 
-content_length = int(self.headers.get('content-length', 0))
-post_data = self.rfile.read(content_length).decode(utf-8)
+
+
+
 
 
