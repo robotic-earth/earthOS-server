@@ -8,6 +8,27 @@
     src: url('../Branding/font/NotoSans-ReRl.ttf') format('truetype');
 }
 
+@media(max-width: 600px) {
+    body {
+        font-size: 18;
+    }
+    h1{
+        font-size: 28px;
+    }
+    input, button {
+        font-size: 16px;
+    }
+    form{
+        width: 90%;
+        padding: 20px;
+    }
+    buotton{
+        width: 100%;
+    }
+}
+
+
+
 body{
     font-family: OSfont2;
     background-color: #272727;
