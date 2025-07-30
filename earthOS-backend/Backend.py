@@ -7,6 +7,7 @@ mimetypes.add_type("font/ttf", ".ttf")
 
 
 class EarthOSHandler(BaseHTTPRequestHandler):
+    # Handles GET requests for login, home, fonts, and redirects
     def do_GET(self):
         admin_exists = login.admin_exists()
         print("admin_exists in GET:", admin_exists)
@@ -56,6 +57,7 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
         
+    # Handles account creation (if no admin exists) and login verification
     def do_POST(self):
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length).decode('utf-8')
@@ -94,6 +96,7 @@ class EarthOSHandler(BaseHTTPRequestHandler):
                 self.end_headers()
 
 
+ # Starts the EarthOS backend server on port 8080
 server = HTTPServer(('0.0.0.0',8080),EarthOSHandler)
 print("backend is running")
 server.serve_forever()

@@ -23,12 +23,13 @@
     <p class="footer"> welcome to EarthOS</p>
 
     <script>
+      // Wait until the page is fully loaded, then update the login form title based on whether an admin exists.
       window.addEventListener("DOMContentLoaded", function() {
         const title = document.getElementById("form-title");
         if (typeof adminExist !== "undefined") {
           title.textContent = adminExist === false ? "create admin account" : "Login";
         } else {
-          title.textContent = "Login"; // fallback
+          title.textContent = "Login";
         }
       });
     </script>
