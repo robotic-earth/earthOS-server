@@ -1,1 +1,6 @@
-{"123": "33ba0cd151fefa4778e923121d1b0ad303cc3a5138d91604debad1391050c4fc20ff1a88e0459d295fcb2151765bc4ac"}
+{
+    "123": {
+        "Password": "20b9e38e1bd6527aec0c82b731e4aedf1dd2173ee4360474a10a169a483c3b06105cc8ac5f562d84ea263ee405b0dc88",
+        "tag": "admin"
+    }
+}

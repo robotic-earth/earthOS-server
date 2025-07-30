@@ -32,6 +32,15 @@ class EarthOSHandler(BaseHTTPRequestHandler):
                 content = file.read()
                 self.wfile.write(content)
 
+        elif self.path == "/home":
+            self.send_response(200)
+            self.send_header("content-type", "text/html")
+            self.end_headers()
+            html_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/home.html")
+            with open(html_path, "r") as file:
+                content = file.read()
+                self.wfile.write(content.encode())
+
         elif self.path.endswith(".ttf"):
             self.send_response(200)
             self.send_header("content-type", "font/ttf")
@@ -59,26 +68,30 @@ class EarthOSHandler(BaseHTTPRequestHandler):
 
         if not login.admin_exists():
             if username.strip() == "":
-                responses = "username cannot be empty"
-
                 self.send_response(302)
                 self.send_header("Location", "/login?error=empty_username")
                 self.end_headers()
                 return
-
-
             else:
-                hashed_password = login.hash_password(password)    
+                hashed_password = login.hash_password(password)
                 login.save_user(username, hashed_password, tag="admin")
-                
-            print("Admin account created.")
+                print("Admin account created.")
+                self.send_response(302)
+                self.send_header("Location", "/login")
+                self.end_headers()
         else:
-        
             print("Admin exists..")
+            users = login.load_users()
+            stored_hash = users.get(username, {}).get("Password")
 
-        self.send_response(302)
-        self.send_header("Location", "/login")
-        self.end_headers()
+            if stored_hash and login.verify_password(stored_hash, password):
+                self.send_response(302)
+                self.send_header("Location", "/home")
+                self.end_headers()
+            else:
+                self.send_response(302)
+                self.send_header("Location", "/login?error=invalid_credentials")
+                self.end_headers()
 
 
 server = HTTPServer(('0.0.0.0',8080),EarthOSHandler)
