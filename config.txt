@@ -1,1 +1,0 @@
-API_ONLY_MODE=0

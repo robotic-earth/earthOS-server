@@ -2,7 +2,7 @@
 <html>
 
    <head>
-    <title>EarthOS login</title>
+    <title>EarthOS</title>
     <link rel="stylesheet" href="login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head> 
@@ -22,17 +22,7 @@
 
     <p class="footer"> welcome to EarthOS</p>
 
-    <script>
-      // Wait until the page is fully loaded, then update the login form title based on whether an admin exists.
-      window.addEventListener("DOMContentLoaded", function() {
-        const title = document.getElementById("form-title");
-        if (typeof adminExist !== "undefined") {
-          title.textContent = adminExist === false ? "create admin account" : "Login";
-        } else {
-          title.textContent = "Login";
-        }
-      });
-    </script>
+    <script src="login.js"></script>
 
    </body>
 </html>

@@ -15,11 +15,10 @@ document.getElementById("login").addEventListener("submit", function(event) {
         },
         body: JSON.stringify({ username, password })
     })
-    .then(response => response.json())
-    .then(data => {
-        // Check server response and display result
-        if (data.success) {
-            alert("Successful login");
+    .then(response => {
+        if (response.redirected) {
+            // If backend redirects, manually navigate there
+            window.location.href = response.url;
         } else {
             alert("Something went wrong with the login.");
         }
@@ -29,3 +28,22 @@ document.getElementById("login").addEventListener("submit", function(event) {
         console.error("Error:", error);
     });
 });
+
+
+  // Wait until the page is fully loaded, then update the login form title based on whether an admin exists.
+      window.addEventListener("DOMContentLoaded", function() {
+        const title = document.getElementById("form-title");
+        fetch("/api/admin-exists")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.exists === false) {
+              title.textContent = "create admin account";
+            } else {
+              title.textContent = "Login";
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking admin:", error);
+            title.textContent = "Login";
+          });
+      });
