@@ -1,0 +1,188 @@
+/* CSS Variables */
+:root {
+    --color-bg-dark: #272727;
+    --color-accent: #25fff5;
+    --color-form-bg: #44615f;
+    --color-border: #00d8ce45;
+    --color-input-bg: #272727;
+    --font-header: 'OSfont1';
+    --font-body: 'OSfont2';
+    --blur-level: blur(10px);
+    --radius-large: 30px;
+    --radius-medium: 20px;
+    --radius-small: 10px;
+}
+
+
+
+
+
+
+/* Custom Fonts */
+@font-face {
+    font-family: 'OSfont1';
+    src: url('/Branding/font/Unitblock-JpJma.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OSfont2';
+    src: url('/Branding/font/NotoSans-ReRl.ttf') format('truetype');
+}
+
+/* Responsive Styles for Small Screens */
+@media(max-width: 600px) {
+    body {
+        font-size: 18;
+    }
+    h1{
+        font-size: 28px;
+    }
+    input, button {
+        font-size: 16px;
+    }
+    form{
+        width: 90%;
+        padding: 20px;
+    }
+    button{
+        width: 100%;
+    }
+}
+
+
+/* Base Layout and Page Styling */
+body{
+    overflow: hidden;
+    font-family: var(--font-body);
+    background-color: var(--color-bg-dark);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styling */
+h1 {
+    color: var(--color-accent);
+    font-family: var(--font-header);
+}
+
+/* Login Form Container */
+form{
+    background-color: var(--color-form-bg);
+    padding: 30px;
+    border-radius: var(--radius-large);
+    backdrop-filter: var(--blur-level);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 2px solid var(--color-border);
+}
+
+
+/* Input Fields (Username & Password) */
+input{
+    background-color: var(--color-input-bg);
+    padding: 12px;
+    border-radius: var(--radius-large);
+    backdrop-filter: var(--blur-level);
+    border: 2px solid var(--color-border);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+}
+
+/* Placeholder Text Styling */
+::placeholder{
+    color: var(--color-accent);
+    font-family: var(--font-body);
+}
+
+/* Login Button Styling */
+button{
+    background-color: var(--color-bg-dark);
+    padding: 9px;
+    border-radius: var(--radius-large);
+    backdrop-filter: var(--blur-level);
+    width: 300px;
+    border: none;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    font-family: var(--font-body);
+}
+form {
+  transition: transform 0.3s ease;
+}
+
+form:hover {
+  transform: scale(1.01);
+}
+
+#home-grid{
+    max-height: calc(100vh - 80px );
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 150px;
+    gap: 20px;
+    padding: 40px;
+    border: 2px dashed #aaa;
+    box-sizing: border-box;
+}
+
+
+.add-widget-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-accent);
+    color: var(--color-bg-dark);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.add-widget-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+
+/* Default Widget Sizes */
+.widget {
+    background-color: var(--color-form-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 16px;
+}
+
+.widget.small {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.widget.medium {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.widget.large {
+    grid-column: span 3;
+    grid-row: span 3;
+}

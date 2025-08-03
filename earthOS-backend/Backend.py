@@ -38,11 +38,11 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             return
 
 
-        elif self.path == "/login.css":
+        elif self.path == "/universal-style.css":
             self.send_response(200)
             self.send_header("content-type", "text/css")
             self.end_headers()
-            css_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-login-frontend/login.css")
+            css_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/universal-style.css")
             with open(css_path, "rb") as file:
                 content = file.read()
                 self.wfile.write(content)
@@ -52,6 +52,15 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             self.send_header("content-type", "application/javascript")
             self.end_headers()
             js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-login-frontend/login.js")
+            with open(js_path, "rb") as file:
+                content = file.read()
+                self.wfile.write(content)
+
+        elif self.path == "/widget.js":
+            self.send_response(200)
+            self.send_header("content-type", "application/javascript")
+            self.end_headers()
+            js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/widget.js")
             with open(js_path, "rb") as file:
                 content = file.read()
                 self.wfile.write(content)
@@ -136,7 +145,7 @@ class EarthOSHandler(BaseHTTPRequestHandler):
 
                 self.send_response(302)
                 self.send_header("Location", "/home")
-                self.send_header("Set-Cookie", f"session_id={session_id}; HttpOnly; Path=/")
+                self.send_header("Set-Cookie", f"session_id={session_id}; Max-Age=57600; HttpOnly; Path=/")
                 self.end_headers()
             else:
                 self.send_response(302)
