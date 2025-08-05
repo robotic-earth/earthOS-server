@@ -1,19 +1,52 @@
-document.querySelectorAll('.widget').forEach(widget => {
-    widget.addEventListener('click', () => {
-        if (widget.classList.contains('small')){
-            widget.classList.remove('small');
-            widget.classList.add('medium')
-        }
-        else if (widget.classList.contains('medium')){
-            widget.classList.remove('medium');
-            widget.classList.add('large');
-        }
-        else {
-            widget.classList.remove('large');
-            widget.classList.add('small');
-        }
-    })
-})
+function resizeWidget(widget) {
+    const currentSize = widget.classList.contains('small') ? 'small'
+                        : widget.classList.contains('medium') ? 'medium'
+                        : 'large';
+
+    const nextSize = currentSize === 'small' ? 'medium'
+                    : currentSize === 'medium' ? 'large'
+                    : 'small';
+
+    const originalRect = widget.getBoundingClientRect();
+
+    widget.classList.add(nextSize);
+    const targetRect = widget.getBoundingClientRect();
+    widget.classList.remove(nextSize);
+
+    const scaleX = targetRect.width / originalRect.width;
+    const scaleY = targetRect.height / originalRect.height;
+    const deltaX = targetRect.left - originalRect.left;
+    const deltaY = targetRect.top - originalRect.top;
+
+    const clone = widget.cloneNode(true);
+    clone.classList.add('widget-transitioning');
+    clone.style.position = 'absolute';
+    clone.style.top = `${originalRect.top}px`;
+    clone.style.left = `${originalRect.left}px`;
+    clone.style.width = `${originalRect.width}px`;
+    clone.style.height = `${originalRect.height}px`;
+    clone.style.zIndex = 1000;
+    clone.style.pointerEvents = 'none';
+    clone.style.transition = 'all 0.3s ease-in-out';
+    clone.style.transform = 'translate(0px, 0px) scale(1, 1)';
+    clone.style.transformOrigin = 'top left';
+
+    widget.style.visibility = 'hidden';
+    document.body.appendChild(clone);
+
+    requestAnimationFrame(() => {
+        clone.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`;
+    });
+
+    setTimeout(() => {
+        clone.remove();
+        widget.classList.remove(currentSize);
+        widget.classList.add(nextSize);
+        widget.style.visibility = 'visible';
+    }, 300);
+}
+
+
 
 
 const addButton = document.querySelector('.add-widget-btn');
@@ -23,24 +56,36 @@ if (addButton && grid) {
     addButton.addEventListener('click', () => {
         const newWidget = document.createElement('div');
         newWidget.classList.add('widget', 'medium');
-        
-        // Add the same click-to-resize behavior as the other widgets
-        newWidget.addEventListener('click', () => {
-            if (newWidget.classList.contains('small')){
-                newWidget.classList.remove('small');
-                newWidget.classList.add('medium');
-            }
-            else if (newWidget.classList.contains('medium')){
-                newWidget.classList.remove('medium');
-                newWidget.classList.add('large');
-            }
-            else {
-                newWidget.classList.remove('large');
-                newWidget.classList.add('small');
-            }
+
+        grid.appendChild(newWidget); // Append first
+        newWidget.style.visibility = 'hidden'; // Hide immediately
+
+        const clone = newWidget.cloneNode(true);
+        clone.classList.add('widget-transitioning');
+        clone.style.position = 'absolute';
+        const originalRect = newWidget.getBoundingClientRect();
+        clone.style.top = `${originalRect.top}px`;
+        clone.style.left = `${originalRect.left}px`;
+        clone.style.width = `${originalRect.width}px`;
+        clone.style.height = `${originalRect.height}px`;
+        clone.style.zIndex = 1000;
+        clone.style.pointerEvents = 'none';
+        clone.style.transition = 'all 0.3s ease-in-out';
+        clone.style.transform = 'translate(0px, 0px) scale(1, 1)';
+        clone.style.transformOrigin = 'top left';
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(() => {
+            clone.style.transform = 'scale(1, 1)'; // keep same scale to show animation placeholder
         });
 
-        grid.appendChild(newWidget);
+        setTimeout(() => {
+            clone.remove();
+            newWidget.style.visibility = 'visible';
+        }, 300);
+
+        newWidget.addEventListener('click', () => {
+            resizeWidget(newWidget);
+        });
     });
 }
-

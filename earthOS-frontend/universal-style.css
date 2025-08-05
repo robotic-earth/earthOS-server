@@ -11,6 +11,13 @@
     --radius-large: 30px;
     --radius-medium: 20px;
     --radius-small: 10px;
+
+    /* Animation Easing Presets */
+    --animation-ease-default: ease-in-out;
+    --animation-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-ease-snappy: cubic-bezier(.17,.67,.83,.67);
+    --animation-ease-bouncy: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --animation-ease-custom: cubic-bezier(0.25, 0.5, 0.75, 0.5);
 }
 
 
@@ -161,16 +168,22 @@ form:hover {
 
 /* Default Widget Sizes */
 .widget {
+    transition: all 0.3s var(--animation-ease-default);
     background-color: var(--color-form-bg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-medium);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-accent);
     font-family: var(--font-body);
     font-size: 16px;
+    position: relative;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    pointer-events: auto;
 }
+
 
 .widget.small {
     grid-column: span 1;
@@ -179,10 +192,31 @@ form:hover {
 
 .widget.medium {
     grid-column: span 2;
-    grid-row: span 2;
+    grid-row: span 1;
 }
 
 .widget.large {
-    grid-column: span 3;
-    grid-row: span 3;
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.widget-transitioning {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 1;
+    transform: scale(1);
+    transition: transform 0.3s var(--animation-ease-default), opacity 0.3s var(--animation-ease-default);
+}
+
+.widget.small.widget-transitioning {
+    transform: scale(1);
+}
+
+.widget.medium.widget-transitioning {
+    transform: scale(1.5);
+}
+
+.widget.large.widget-transitioning {
+    transform: scale(2);
 }
