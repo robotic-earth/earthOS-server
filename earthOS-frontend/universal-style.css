@@ -184,6 +184,11 @@ form:hover {
     pointer-events: auto;
 }
 
+.widget.blurred {
+    filter: blur(4px);
+    transition: filter 0.3s var(--animation-ease-default);
+}
+
 
 .widget.small {
     grid-column: span 1;
@@ -207,6 +212,11 @@ form:hover {
     opacity: 1;
     transform: scale(1);
     transition: transform 0.3s var(--animation-ease-default), opacity 0.3s var(--animation-ease-default);
+    filter: blur(0px);
+}
+
+.widget-transitioning.active {
+    filter: blur(4px);
 }
 
 .widget.small.widget-transitioning {
