@@ -65,6 +65,15 @@ class EarthOSHandler(BaseHTTPRequestHandler):
                 content = file.read()
                 self.wfile.write(content)
 
+        elif self.path == "/home.js":
+            self.send_response(200)
+            self.send_header("content-type", "application/javascript")
+            self.end_headers()
+            js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/home.js")
+            with open(js_path, "rb") as file:
+                content = file.read()
+                self.wfile.write(content)
+
         elif self.path == "/home":
             cookie_header = self.headers.get("Cookie")
             if cookie_header:

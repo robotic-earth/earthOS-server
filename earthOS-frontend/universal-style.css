@@ -1,8 +1,8 @@
-/* CSS Variables */
 :root {
     --color-bg-dark: #272727;
     --color-accent: #25fff5;
-    --color-form-bg: #44615f;
+    --color-form-bg: #44615f;              /* general form/controls surface */
+    --color-surface: #3a4f4d;              /* darker “on-top” surface (sidebar) */
     --color-border: #00d8ce45;
     --color-input-bg: #272727;
     --font-header: 'OSfont1';
@@ -18,14 +18,59 @@
     --animation-ease-snappy: cubic-bezier(.17,.67,.83,.67);
     --animation-ease-bouncy: cubic-bezier(0.68, -0.6, 0.32, 1.6);
     --animation-ease-custom: cubic-bezier(0.25, 0.5, 0.75, 0.5);
+
+    --sidebar-w: 260px;
 }
 
+/* Base body styling */
+body {
+  margin: 0;
+  font-family: var(--font-body, system-ui, sans-serif);
+  background-color: var(--color-bg-dark);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;     
+  height: 100vh;
+}
 
+/* Sidebar */
+#sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-w);
+  background: var(--color-surface); /* darker panel */
+  border-right: 1px solid var(--color-border);
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
 
+/* Sidebar Buttons */
+.nav-btn {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-form-bg); /* brighter than sidebar */
+  cursor: pointer;
+  font-size: 14px;
+}
 
+.nav-btn:hover {
+  filter: brightness(1.1);
+}
 
+.nav-btn.is-active {
+  outline: 2px solid var(--color-accent);
+}
 
-/* Custom Fonts */
+/* Fonts */
 @font-face {
     font-family: 'OSfont1';
     src: url('/Branding/font/Unitblock-JpJma.ttf') format('truetype');
@@ -36,47 +81,22 @@
     src: url('/Branding/font/NotoSans-ReRl.ttf') format('truetype');
 }
 
-/* Responsive Styles for Small Screens */
-@media(max-width: 600px) {
-    body {
-        font-size: 18;
-    }
-    h1{
-        font-size: 28px;
-    }
-    input, button {
-        font-size: 16px;
-    }
-    form{
-        width: 90%;
-        padding: 20px;
-    }
-    button{
-        width: 100%;
-    }
+/* Responsive */
+@media (max-width: 600px) {
+    body { font-size: 18px; }
+    h1 { font-size: 28px; }
+    input, button { font-size: 16px; }
+    form { width: 90%; padding: 20px; }
+    button { width: 100%; }
 }
 
-
-/* Base Layout and Page Styling */
-body{
-    overflow: hidden;
-    font-family: var(--font-body);
-    background-color: var(--color-bg-dark);
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Header Styling */
+/* Header / Forms */
 h1 {
     color: var(--color-accent);
     font-family: var(--font-header);
 }
 
-/* Login Form Container */
-form{
+form {
     background-color: var(--color-form-bg);
     padding: 30px;
     border-radius: var(--radius-large);
@@ -86,11 +106,12 @@ form{
     flex-direction: column;
     gap: 15px;
     border: 2px solid var(--color-border);
+    transition: transform 0.3s ease;
 }
 
+form:hover { transform: scale(1.01); }
 
-/* Input Fields (Username & Password) */
-input{
+input {
     background-color: var(--color-input-bg);
     padding: 12px;
     border-radius: var(--radius-large);
@@ -100,45 +121,51 @@ input{
     font-family: var(--font-body);
 }
 
-/* Placeholder Text Styling */
-::placeholder{
+::placeholder {
     color: var(--color-accent);
     font-family: var(--font-body);
 }
 
-/* Login Button Styling */
-button{
+button {
     background-color: var(--color-bg-dark);
     padding: 9px;
     border-radius: var(--radius-large);
     backdrop-filter: var(--blur-level);
     width: 300px;
-    border: none;
-    color: var(--color-accent);
     border: 2px solid var(--color-accent);
+    color: var(--color-accent);
     font-family: var(--font-body);
 }
-form {
-  transition: transform 0.3s ease;
-}
 
-form:hover {
-  transform: scale(1.01);
-}
-
-#home-grid{
-    max-height: calc(100vh - 80px );
+/* Grid + Add Button */
+/* Replace your existing #home-grid rules with this block */
+#home-grid {
+    position: absolute;
+    top: 0;
+    left: var(--sidebar-w);
+    right: 0;
     height: 100vh;
-    width: 100vw;
+    max-height: calc(100vh - 80px);
+    box-sizing: border-box;
+
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-auto-rows: 150px;
     gap: 20px;
     padding: 40px;
-    border: 2px dashed #aaa;
-    box-sizing: border-box;
+    /* border: 2px dashed #aaa; */ /* debug border, now hidden */
+
+    overflow: auto;
+    z-index: 1;
+
+    transition: opacity 0.3s var(--animation-ease-default);
 }
 
+/* hidden state for fade effect */
+#home-grid.hidden {
+    opacity: 0;
+    pointer-events: none; /* disables interaction while hidden */
+}
 
 .add-widget-btn {
     position: absolute;
@@ -165,8 +192,7 @@ form:hover {
     transition: transform 0.2s ease-in-out;
 }
 
-
-/* Default Widget Sizes */
+/* Widgets + Blur */
 .widget {
     transition: all 0.3s var(--animation-ease-default);
     background-color: var(--color-form-bg);
@@ -189,21 +215,9 @@ form:hover {
     transition: filter 0.3s var(--animation-ease-default);
 }
 
-
-.widget.small {
-    grid-column: span 1;
-    grid-row: span 1;
-}
-
-.widget.medium {
-    grid-column: span 2;
-    grid-row: span 1;
-}
-
-.widget.large {
-    grid-column: span 2;
-    grid-row: span 2;
-}
+.widget.small { grid-column: span 1; grid-row: span 1; }
+.widget.medium { grid-column: span 2; grid-row: span 1; }
+.widget.large { grid-column: span 2; grid-row: span 2; }
 
 .widget-transitioning {
     position: absolute;
@@ -215,18 +229,7 @@ form:hover {
     filter: blur(0px);
 }
 
-.widget-transitioning.active {
-    filter: blur(4px);
-}
-
-.widget.small.widget-transitioning {
-    transform: scale(1);
-}
-
-.widget.medium.widget-transitioning {
-    transform: scale(1.5);
-}
-
-.widget.large.widget-transitioning {
-    transform: scale(2);
-}
+.widget-transitioning.active { filter: blur(4px); }
+.widget.small.widget-transitioning { transform: scale(1); }
+.widget.medium.widget-transitioning { transform: scale(1.5); }
+.widget.large.widget-transitioning { transform: scale(2); }
