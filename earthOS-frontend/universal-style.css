@@ -145,11 +145,11 @@ button {
     left: var(--sidebar-w);
     right: 0;
     height: 100vh;
-    max-height: calc(100vh - 80px);
+    max-height: 100vh;
     box-sizing: border-box;
 
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 150px));
     grid-auto-rows: 150px;
     gap: 20px;
     padding: 40px;
@@ -233,3 +233,25 @@ button {
 .widget.small.widget-transitioning { transform: scale(1); }
 .widget.medium.widget-transitioning { transform: scale(1.5); }
 .widget.large.widget-transitioning { transform: scale(2); }
+/* Default message hidden */
+#small-screen-message {
+    display: none;
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    text-align: center;
+    margin-top: 20px;
+    position: absolute;
+    left: var(--sidebar-w);
+    right: 0;
+    width: calc(100% - var(--sidebar-w));
+}
+
+/* Hide widgets and show message on narrow viewport */
+@media (max-width: 700px) {
+    #home-grid {
+        display: none;
+    }
+    #small-screen-message {
+        display: block;
+    }
+}
