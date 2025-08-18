@@ -6,6 +6,7 @@ import login
 import urllib.parse
 import mimetypes
 import json
+import files
 mimetypes.add_type("font/ttf", ".ttf")
 
 
@@ -22,11 +23,8 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("content-type", "text/html")
             self.end_headers()
-
-            html_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-login-frontend/login.html")
-            with open(html_path, "rb") as file:
-
-                self.wfile.write(file.read())
+            content = files.get_html("earthOS-login-frontend/login.html")
+            self.wfile.write(content)
 
         elif self.path == "/api/admin-exists":
             exists = login.admin_exists()
@@ -42,37 +40,29 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("content-type", "text/css")
             self.end_headers()
-            css_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/universal-style.css")
-            with open(css_path, "rb") as file:
-                content = file.read()
-                self.wfile.write(content)
+            content = files.get_css("universal-style.css")
+            self.wfile.write(content)
 
         elif self.path == "/login.js":
             self.send_response(200)
             self.send_header("content-type", "application/javascript")
             self.end_headers()
-            js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-login-frontend/login.js")
-            with open(js_path, "rb") as file:
-                content = file.read()
-                self.wfile.write(content)
+            content = files.get_js("earthOS-login-frontend/login.js")
+            self.wfile.write(content)
 
         elif self.path == "/widget.js":
             self.send_response(200)
             self.send_header("content-type", "application/javascript")
             self.end_headers()
-            js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/widget.js")
-            with open(js_path, "rb") as file:
-                content = file.read()
-                self.wfile.write(content)
+            content = files.get_js("earthOS-home-frontend/widget.js")
+            self.wfile.write(content)
 
         elif self.path == "/home.js":
             self.send_response(200)
             self.send_header("content-type", "application/javascript")
             self.end_headers()
-            js_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/home.js")
-            with open(js_path, "rb") as file:
-                content = file.read()
-                self.wfile.write(content)
+            content = files.get_js("earthOS-home-frontend/home.js")
+            self.wfile.write(content)
 
         elif self.path == "/home":
             cookie_header = self.headers.get("Cookie")
@@ -83,10 +73,8 @@ class EarthOSHandler(BaseHTTPRequestHandler):
                     self.send_response(200)
                     self.send_header("content-type", "text/html")
                     self.end_headers()
-                    html_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/earthOS-home-frontend/home.html")
-                    with open(html_path, "r") as file:
-                        content = file.read()
-                        self.wfile.write(content.encode())
+                    content = files.get_html("earthOS-home-frontend/home.html")
+                    self.wfile.write(content)
                     return
             self.send_response(302)
             self.send_header("Location", "/login")
@@ -97,10 +85,10 @@ class EarthOSHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("content-type", "font/ttf")
             self.end_headers()
-            font_path = os.path.join(os.path.dirname(__file__), "../earthOS-frontend/",self.path.lstrip("/"))
-            with open(font_path, "rb") as file:
-                content = file.read()
-                self.wfile.write(content)
+            # Remove leading slash from path for relative path
+            relative_path = self.path.lstrip("/")
+            content = files.get_font(relative_path)
+            self.wfile.write(content)
 
         else:
             self.send_response(302)
