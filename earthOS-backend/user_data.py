@@ -1,80 +1,66 @@
 import os
 import json
 
-USER_DATA_DIR = "user-data"  # base folder for all users
+USER_DATA_DIR = "user-data"
 
-def startup_user(username):
-    """
-    Ensure that the user's directory structure exists:
-      - home/documents
-      - home/photos
-      - apps
-      - os (user-specific OS data like widget positions)
-    """
+def ensure_user_dir(username):
+    """Ensure all base directories exist for a user."""
     user_dir = os.path.join(USER_DATA_DIR, username)
     os.makedirs(user_dir, exist_ok=True)
+    for subdir in ['home/documents', 'home/photos', 'applications', 'OS']:
+        os.makedirs(os.path.join(user_dir, subdir), exist_ok=True)
+    return user_dir
 
-    # Create home subfolders
-    home_subfolders = ['documents', 'photos']
-    for sub in home_subfolders:
-        os.makedirs(os.path.join(user_dir, 'home', sub), exist_ok=True)
-
-    # Create apps folder
-    os.makedirs(os.path.join(user_dir, 'apps'), exist_ok=True)
-
-    # Create OS folder
-    os.makedirs(os.path.join(user_dir, 'os'), exist_ok=True)
-
-    # Initialize widget positions file if it doesn't exist
-    widgets_file = os.path.join(user_dir, 'os', 'widgets.json')
+def startup_user(username):
+    """Initialize a user: create folders and empty widget file."""
+    ensure_user_dir(username)
+    widgets_file = os.path.join(USER_DATA_DIR, username, "OS", "widgets.json")
     if not os.path.exists(widgets_file):
-        with open(widgets_file, 'w') as f:
-            json.dump({}, f, indent=4)
+        with open(widgets_file, "w") as f:
+            json.dump([], f)  # always an array for JS
 
-def save_file(username, filename, content, subdir="home/documents"):
-    """
-    Save a file to a user's folder.
-    subdir can be 'home/documents', 'home/photos', 'apps', or 'os'.
-    """
-    file_dir = os.path.join(USER_DATA_DIR, username, subdir)
-    os.makedirs(file_dir, exist_ok=True)
-    file_path = os.path.join(file_dir, filename)
-    with open(file_path, "wb") as f:
+def save_file(username, filename, content, subdir=None):
+    """Save a file for a user."""
+    user_dir = os.path.join(USER_DATA_DIR, username)
+    if subdir:
+        user_dir = os.path.join(user_dir, subdir)
+    os.makedirs(user_dir, exist_ok=True)
+    filepath = os.path.join(user_dir, filename)
+    with open(filepath, "wb") as f:
         f.write(content)
-    return file_path
+    return filepath
+
+def get_file(username, filename, subdir=None):
+    """Retrieve a file's content."""
+    user_dir = os.path.join(USER_DATA_DIR, username)
+    if subdir:
+        user_dir = os.path.join(user_dir, subdir)
+    filepath = os.path.join(user_dir, filename)
+    if os.path.exists(filepath):
+        with open(filepath, "rb") as f:
+            return f.read()
+    return None
 
 def list_files(username, subdir=None):
-    """
-    List files for a user in a specific folder.
-    """
-    base_dir = os.path.join(USER_DATA_DIR, username)
+    """List all files in a user's directory or subdirectory."""
+    user_dir = os.path.join(USER_DATA_DIR, username)
     if subdir:
-        base_dir = os.path.join(base_dir, subdir)
-    if os.path.exists(base_dir):
-        return os.listdir(base_dir)
+        user_dir = os.path.join(user_dir, subdir)
+    if os.path.exists(user_dir):
+        return os.listdir(user_dir)
     return []
 
-# --- Widget position management ---
-def save_widgets(username, widget_data):
-    """
-    Save the user's widget positions in JSON format.
-    widget_data should be a dictionary mapping widget names to positions/sizes.
-    """
-    widgets_file = os.path.join(USER_DATA_DIR, username, 'os', 'widgets.json')
+# --- Widgets functions ---
+def save_widgets(username, widgets_data):
+    """Save widget layout for a user."""
+    widgets_file = os.path.join(USER_DATA_DIR, username, "OS", "widgets.json")
     os.makedirs(os.path.dirname(widgets_file), exist_ok=True)
-    with open(widgets_file, 'w') as f:
-        json.dump(widget_data, f, indent=4)
+    json.dump(widgets_data, open(widgets_file, "w"), indent=2)
 
 def load_widgets(username):
-    """
-    Load the user's widget positions.
-    Returns a dictionary; empty if no data exists.
-    """
-    widgets_file = os.path.join(USER_DATA_DIR, username, 'os', 'widgets.json')
+    """Load widget layout for a user."""
+    widgets_file = os.path.join(USER_DATA_DIR, username, "OS", "widgets.json")
     if os.path.exists(widgets_file):
-        with open(widgets_file, 'r') as f:
-            try:
-                return json.load(f)
-            except json.JSONDecodeError:
-                return {}
-    return {}
+        with open(widgets_file, "r") as f:
+            return json.load(f)
+    return []  # return array to match JS expectation
