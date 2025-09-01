@@ -151,7 +151,4 @@ class EarthOSHandler(BaseHTTPRequestHandler):
         self.redirect("/login")
 
 
-# --- Start server ---
-server = HTTPServer(('0.0.0.0', 8080), EarthOSHandler)
-print("Backend running on port 8080")
-server.serve_forever()
+
