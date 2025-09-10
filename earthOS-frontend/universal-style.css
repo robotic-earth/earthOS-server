@@ -35,6 +35,14 @@ body {
   height: 100vh;
 }
 
+.sidebar-divider {
+    height: 1px;
+    width: calc(100% - 32px);
+    background-color: var(--color-form-bg);
+    margin: 8px auto;
+    border-radius: 50%;
+}
+
 /* Sidebar */
 #sidebar {
   position: fixed;
@@ -49,6 +57,8 @@ body {
   gap: 8px;
   z-index: 100;
 }
+
+
 
 /* Sidebar Buttons */
 .nav-btn {
