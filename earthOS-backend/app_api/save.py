@@ -1,5 +1,5 @@
 import base64
-import user_data
+import core.user_data as user_data
 
 def handle_post(handler, path, username, parsed_data):
     if path == "/api/save-file":

@@ -1,5 +1,5 @@
 import json
-import user_data
+import core.user_data as user_data
 from http import cookies
 
 def handle_get(handler, path, session_username):

@@ -4,19 +4,18 @@ import mimetypes
 import json
 import urllib.parse
 import secrets
-
-import files
-import login
-import user_data
-import os_api
-import app_api
+import core.login as login
+import core.files as files
+import os_api.widget_api as os_api
+import app_api.save as app_api
+import core.user_data as user_data
 
 # Ensure fonts are served with correct type
 mimetypes.add_type("font/ttf", ".ttf")
 
 
 class EarthOSHandler(BaseHTTPRequestHandler):
-    sessions = {}  # session_id -> username mapping
+    sessions = {}  # session_id -> usernamimport core.user_datae mapping
 
     # --- Helper Methods ---
     def serve_file(self, content, content_type):

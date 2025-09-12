@@ -1,0 +1,8 @@
+{
+  "name": "Photo Upload",
+  "id": "photo-upload",
+  "version": "1.0",
+  "description": "Upload and manage photos in EarthOS",
+  "entry": "app.html",
+  "permissions": ["storage"]
+}
